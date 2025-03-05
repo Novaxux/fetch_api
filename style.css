@@ -1,0 +1,22 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+section{
+    width: 100%;
+    background-color: rgb(237, 237, 237);
+}
+select{
+    width: 20%;
+    height: 3rem;
+}
+article{
+    width: 60%;
+    margin: auto;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: rgb(236, 255, 27);
+    -webkit-box-shadow: -15px 10px 58px -33px rgba(0,0,0,0.75);
+-moz-box-shadow: -15px 10px 58px -33px rgba(0,0,0,0.75);
+box-shadow: -15px 10px 58px -33px rgba(0,0,0,0.75);
+}
