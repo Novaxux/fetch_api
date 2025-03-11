@@ -22,21 +22,40 @@ document.getElementById('opcion_usuario').addEventListener('change',function () 
                 <article>
                     <h3>${post.title}</h3>
                     <p>${post.body}</p>
-                    <button class ="verComentarios" data-id="${post.id}">Ver comentarios</button>
-                    <button class ="ocultarComentarios" data-id="${post.id}">Ocultar comentarios</button>
+                    <div id="btnVerComentarios${post.id}">
+                        <button class ="verComentarios" onclick="asignarComentarios(${post.id})">Ver comentarios</button>
+                    </div>
+                    <div id="coment${post.id}"></div>
                 </article>`
             }
         });
-        // asignarEventosComentarios();
     })
 })
 
-// function asignarEventosComentarios() {
-//     document.querySelectorAll('.verComentarios').forEach(boton => { // 🔹 Corregido el selector
-//         boton.addEventListener('click', function () {
-//             let postId = this.getAttribute('data-id'); // 🔹 Ahora obtiene el ID correctamente
-//             console.log(postId);
-//         });
-//     });
-// }
+function asignarComentarios(id) {
+    fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
+    .then(response => response.json())
+    .then(comments => {
+        let divComent = document.getElementById("coment"+id);
+        let btnComment = document.getElementById("btnVerComentarios"+id)
+        btnComment.hidden = true;
+        comments.forEach(comment => {
+            divComent.innerHTML += `
+            <article>
+                <h3>${comment.name}</h3>
+                <p>${comment.body}</p>
+            </article>
+            `
+        })
+        divComent.innerHTML += `
+        <button class ="verComentarios" onclick = "ocultarComentarios(${id})" >Ocultar comentarios</button>
+        `
+    })
+}
 
+function ocultarComentarios(id){
+    let btnComment = document.getElementById("btnVerComentarios"+id)
+    btnComment.hidden = false;
+    let divComent = document.getElementById("coment"+id);
+    divComent.innerHTML = ''
+}
