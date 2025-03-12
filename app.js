@@ -22,8 +22,9 @@ document.getElementById('opcion_usuario').addEventListener('change',function () 
                 <article>
                     <h3>${post.title}</h3>
                     <p>${post.body}</p>
-                    <div id="btnVerComentarios${post.id}">
-                        <button class ="verComentarios" onclick="asignarComentarios(${post.id})">Ver comentarios</button>
+                    <div id="divbtnComentarios${post.id}">
+                        <button class ="verComentarios" id="verComentarios${post.id}" onclick="asignarComentarios(${post.id})">Ver comentarios</button>
+                        <button class ="ocultarComentarios" id="hideComments${post.id}" hidden= "true" onclick = "ocultarComentarios(${post.id})" >Ocultar comentarios</button>
                     </div>
                     <div id="coment${post.id}"></div>
                 </article>`
@@ -36,26 +37,28 @@ function asignarComentarios(id) {
     fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
     .then(response => response.json())
     .then(comments => {
-        let divComent = document.getElementById("coment"+id);
-        let btnComment = document.getElementById("btnVerComentarios"+id)
-        btnComment.hidden = true;
+        let divComment = document.getElementById("coment"+id);
+        let btnComments = document.getElementById("verComentarios"+id)
+        let btnHideComments = document.getElementById("hideComments"+ id)
+        btnComments.hidden = true;
+        btnHideComments.hidden = false;
+        divComment.innerHTML = ''
         comments.forEach(comment => {
-            divComent.innerHTML += `
+            divComment.innerHTML += `
             <article>
                 <h3>${comment.name}</h3>
                 <p>${comment.body}</p>
             </article>
             `
         })
-        divComent.innerHTML += `
-        <button class ="verComentarios" onclick = "ocultarComentarios(${id})" >Ocultar comentarios</button>
-        `
     })
 }
 
 function ocultarComentarios(id){
-    let btnComment = document.getElementById("btnVerComentarios"+id)
-    btnComment.hidden = false;
-    let divComent = document.getElementById("coment"+id);
-    divComent.innerHTML = ''
+    let btnComments = document.getElementById("verComentarios"+id)
+    let btnHideComments = document.getElementById("hideComments"+ id)
+    let divComment = document.getElementById("coment"+id);
+    btnComments.hidden = false;
+    btnHideComments.hidden = true;
+    divComment.innerHTML = ''
 }
