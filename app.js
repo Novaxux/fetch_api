@@ -19,12 +19,13 @@ document.getElementById('opcion_usuario').addEventListener('change',function () 
         posts.forEach(post =>{
             if(post.userId == selectValue){
                 container.innerHTML += `
-                <article>
+                <article id="post${post.id}" >
                     <h3>${post.title}</h3>
                     <p>${post.body}</p>
                     <div id="divbtnComentarios${post.id}">
                         <button class ="verComentarios" id="verComentarios${post.id}" onclick="asignarComentarios(${post.id})">Ver comentarios</button>
                         <button class ="ocultarComentarios" id="hideComments${post.id}" hidden= "true" onclick = "ocultarComentarios(${post.id})" >Ocultar comentarios</button>
+                        <button class ="Eliminar" id="Eliminar${post.id}" onclick="eliminarPost(${post.id})">Eliminar Post</button>
                     </div>
                     <div id="coment${post.id}"></div>
                 </article>`
@@ -62,3 +63,56 @@ function ocultarComentarios(id){
     btnHideComments.hidden = true;
     divComment.innerHTML = ''
 }
+
+function eliminarPost(postId){
+    console.log('Eliminando '+postId)
+    fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
+        method: 'DELETE',
+      })
+    .then(response =>{
+        if (response.ok){
+            alert('Eliminado post ' + postId)
+            let post = document.getElementById('post'+postId)
+            post.remove()
+        }else{
+            alert("Error al eliminar el post" + postId)
+        }
+    })
+}
+
+document.getElementById('agregarPost').addEventListener('submit',(e)=>{
+    e.preventDefault()
+    let id_usuario = document.getElementById('opcion_usuario').value
+    let ptitle = document.getElementById('pTitle').value
+    let descripcion = document.getElementById('pDesc').value
+    let container = document.getElementById('posts')
+    if(id_usuario){
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            body: JSON.stringify({
+              title: ptitle,
+              body: descripcion,
+              userId: id_usuario,
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+            .then((response) => response.json())
+            .then(post => {
+                container.innerHTML += `
+            <article id="post${post.id}" >
+                <h3>${post.title}</h3>
+                <p>${post.body}</p>
+                <div id="divbtnComentarios${post.id}">
+                    <button class ="verComentarios" id="verComentarios${post.id}" onclick="asignarComentarios(${post.id})">Ver comentarios</button>
+                    <button class ="ocultarComentarios" id="hideComments${post.id}" hidden= "true" onclick = "ocultarComentarios(${post.id})" >Ocultar comentarios</button>
+                    <button class ="Eliminar" id="Eliminar${post.id}" onclick="eliminarPost(${post.id})">Eliminar Post</button>
+                </div>
+                <div id="coment${post.id}"></div>
+            </article>`
+            });
+    }else{
+        alert('Seleccione un usuario')
+    }
+})

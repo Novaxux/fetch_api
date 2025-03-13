@@ -47,3 +47,23 @@ button:hover{
     background-color: black;
     color: white;
 }
+form{
+    width: 50%;
+    margin: 1rem;
+    margin: auto;
+    background-color: rgba(0, 123, 123, 0.58);
+    padding: 2rem;
+    border-radius: 5px;
+}
+form label{
+    width: 100%;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: large;
+}
+form input {
+    width: 50%;
+}
+form textarea{
+    width: 754px;
+}

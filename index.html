@@ -9,11 +9,18 @@
 <body>
 <section>
     <select name="usuarios" id="opcion_usuario">
+    <option value="">Selecciona usuario</option>
     </select>
 </section>
 <section id="posts">
-
 </section>
+<Section>
+    <form id="agregarPost">
+        <label for="postTitle">Titulo del post</label><br><input required type="text" id="pTitle"><br>  
+        <label for="postDesc">Descripcion</label><textarea required name="postDesc" id="pDesc"></textarea><br>
+        <button type="submit">Agregar post</button>
+    </form>
+</Section>
 <script src="app.js"></script>
 </body>
 </html>
