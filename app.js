@@ -115,4 +115,7 @@ document.getElementById('agregarPost').addEventListener('submit',(e)=>{
     }else{
         alert('Seleccione un usuario')
     }
+    document.getElementById('pTitle').value = ''
+    document.getElementById('pDesc').value = ''
+
 })
